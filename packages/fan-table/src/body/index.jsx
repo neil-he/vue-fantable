@@ -12,10 +12,11 @@ import {
 // import eventCenter from '@P/events/event-center'
 import VueDomResizeObserver from '@P/src/components/resize-observer/index.js'
 import BodyTr from './body-tr.jsx'
-import ExpandTr from './expand-tr.jsx'
 import BodyTrScrolling from './body-tr-scrolling.jsx'
+import ExpandTr from './expand-tr.jsx'
 import { GLOBAL_EVENT } from '@P/events/global-events.js'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: COMPS_NAME.FAN_TABLE_BODY,
   components: {
     BodyTr
@@ -153,13 +154,13 @@ export default {
       // columns widths map
       colsWidths: new Map(),
       /*
-            internal expand row keys
-            1、当没有设置 expandedRowKeys 时生效
-            */
+        internal expand row keys
+        1、当没有设置 expandedRowKeys 时生效
+      */
       internalExpandRowkeys: [],
       /*
-            1、存储当前多选功能的rowkey 信息
-            */
+        1、存储当前多选功能的rowkey 信息
+      */
       internalCheckboxSelectedRowKeys: [],
       /*
             1、存储当前单选功能的rowkey 信息
@@ -173,10 +174,10 @@ export default {
   },
   computed: {
     /*
-        column collenction info
-        1、style of each column
-        2、class of each column
-        */
+      column collenction info
+      1、style of each column
+      2、class of each column
+    */
     columnCollection() {
       const columnCollection = []
 
@@ -944,3 +945,4 @@ export default {
     )
   },
 }
+)

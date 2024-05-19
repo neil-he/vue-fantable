@@ -287,7 +287,7 @@ export default {
             }
 
             //  cell indicator (operation column)
-            if (indicatorRowKeys.indexOf(currentRowKey) > -1) {
+            if (indicatorRowKeys.includes(currentRowKey)) {
               if (isIndicatorActive) {
                 result[clsName('cell-indicator-active')] = true
               } else {

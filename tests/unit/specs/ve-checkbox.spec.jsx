@@ -209,7 +209,7 @@ describe('VeCheckbox', () => {
 
     // expect(wrapper.emitted('checked-change').length).toEqual(2)
     // expect(wrapper.emitted('checked-change').length).toEqual(2)
-    console.log("🚀 ~ it ~ wrapper.emitted('checked-change'):", wrapper.emitted('checked-change'))
+    // console.log("🚀 ~ it ~ wrapper.emitted('checked-change'):", wrapper.emitted('checked-change'))
     expect(wrapper.emitted()).toHaveProperty('checkedChange')
     expect(wrapper.emitted().checkedChange[0]).toEqual([true])
     expect(wrapper.emitted().checkedChange[1]).toEqual([false])
