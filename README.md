@@ -1,13 +1,11 @@
-> 已经基本完成[文档](https://fall-zhang.github.io/vue-fantable/#/zh/doc/intro)的开发
-> vue-fantable 开发已经初步完成，如果遇到了任何组件和文档有关问题，可以提交 [issue](https://github.com/fall-zhang/vue-fantable/issues)
+> 遇到任何组件和文档有关问题，请提交 [issue](https://github.com/fall-zhang/vue-fantable/issues)
+> 如果我看的更远，那是因为我站在巨人的肩膀上。
 
 # vue-fantable
 
 [![license](https://img.shields.io/npm/l/vue-fantable.svg)](http://www.opensource.org/licenses/mit-license.php)
 
 [English](./README-EN.md) | **中文**
-
-> 如果我看的更远，那是因为我站在巨人的肩膀上。
 
 ## 介绍
 
