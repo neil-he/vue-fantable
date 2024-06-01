@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - next
+      - root
     paths:
       - ".github/workflows/deploy-docs.yml"
       - "docs/**"
