@@ -277,6 +277,12 @@ export default {
         return null
       },
     },
+    onArrowKeyEnter: {
+      type: Function,
+      default: function (rowIndex, columnIndex) {
+        return null
+      },
+    }
   },
   data() {
     return {
@@ -1737,22 +1743,26 @@ export default {
           const nextColumn = colgroups[columnIndex - 1]
           this.cellSelectionData.currentCell.colKey = nextColumn.key
           this.columnToVisible(nextColumn)
+          this.onArrowKeyEnter(rowIndex, columnIndex - 1)
         }
       } else if (direction === CELL_SELECTION_DIRECTION.RIGHT) {
         if (columnIndex < colgroups.length - 1) {
           const nextColumn = colgroups[columnIndex + 1]
           this.cellSelectionData.currentCell.colKey = nextColumn.key
           this.columnToVisible(nextColumn)
+          this.onArrowKeyEnter(rowIndex, columnIndex + 1)
         }
       } else if (direction === CELL_SELECTION_DIRECTION.UP) {
         if (rowIndex > 0) {
           const nextRowKey = allRowKeys[rowIndex - 1]
           this.rowToVisible(KEY_CODES.ARROW_UP, nextRowKey)
+          this.onArrowKeyEnter(rowIndex - 1, columnIndex)
         }
       } else if (direction === CELL_SELECTION_DIRECTION.DOWN) {
         if (rowIndex < allRowKeys.length - 1) {
           const nextRowKey = allRowKeys[rowIndex + 1]
           this.rowToVisible(KEY_CODES.ARROW_DOWN, nextRowKey)
+          this.onArrowKeyEnter(rowIndex - 1, columnIndex)
         }
       }
     },
