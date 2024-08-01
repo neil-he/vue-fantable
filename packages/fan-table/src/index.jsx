@@ -1553,27 +1553,14 @@ export default {
 
       if (!isEmptyValue(rowKey) && !isEmptyValue(colKey)) {
         switch (keyCode) {
-        case KEY_CODES.TAB: {
-          let direction
-          if (shiftKey) {
-            direction = CELL_SELECTION_DIRECTION.LEFT
-          } else {
-            direction = CELL_SELECTION_DIRECTION.RIGHT
-          }
+          case KEY_CODES.TAB: {
+            let direction
+            if (shiftKey) {
+              direction = CELL_SELECTION_DIRECTION.LEFT
+            } else {
+              direction = CELL_SELECTION_DIRECTION.RIGHT
+            }
 
-          this.selectCellByDirection({
-            direction,
-          })
-
-          this.clearCellSelectionNormalEndCell()
-
-          this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-          event.preventDefault()
-          break
-        }
-        case KEY_CODES.ARROW_LEFT: {
-          const direction = CELL_SELECTION_DIRECTION.LEFT
-          if (enableStopEditing) {
             this.selectCellByDirection({
               direction,
             })
@@ -1582,143 +1569,156 @@ export default {
 
             this[INSTANCE_METHODS.STOP_EDITING_CELL]()
             event.preventDefault()
+            break
           }
+          case KEY_CODES.ARROW_LEFT: {
+            const direction = CELL_SELECTION_DIRECTION.LEFT
+            if (enableStopEditing) {
+              this.selectCellByDirection({
+                direction,
+              })
 
-          break
-        }
-        case KEY_CODES.ARROW_RIGHT: {
-          const direction = CELL_SELECTION_DIRECTION.RIGHT
+              this.clearCellSelectionNormalEndCell()
 
-          if (enableStopEditing) {
-            this.selectCellByDirection({
-              direction,
-            })
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+              event.preventDefault()
+            }
 
-            this.clearCellSelectionNormalEndCell()
-
-            this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-            event.preventDefault()
+            break
           }
-          break
-        }
-        case KEY_CODES.ARROW_UP: {
-          const direction = CELL_SELECTION_DIRECTION.UP
+          case KEY_CODES.ARROW_RIGHT: {
+            const direction = CELL_SELECTION_DIRECTION.RIGHT
 
-          if (enableStopEditing) {
-            this.selectCellByDirection({
-              direction,
-            })
+            if (enableStopEditing) {
+              this.selectCellByDirection({
+                direction,
+              })
 
-            this.clearCellSelectionNormalEndCell()
+              this.clearCellSelectionNormalEndCell()
 
-            this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-            event.preventDefault()
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+              event.preventDefault()
+            }
+            break
           }
-          break
-        }
-        case KEY_CODES.ARROW_DOWN: {
-          const direction = CELL_SELECTION_DIRECTION.DOWN
+          case KEY_CODES.ARROW_UP: {
+            const direction = CELL_SELECTION_DIRECTION.UP
 
-          if (enableStopEditing) {
-            this.selectCellByDirection({
-              direction,
-            })
+            if (enableStopEditing) {
+              this.selectCellByDirection({
+                direction,
+              })
 
-            this.clearCellSelectionNormalEndCell()
+              this.clearCellSelectionNormalEndCell()
 
-            this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-            event.preventDefault()
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+              event.preventDefault()
+            }
+            break
           }
-          break
-        }
-        case KEY_CODES.ENTER: {
-          let direction
-          // add new line
-          if (altKey) {
-            const editInputEditor =
+          case KEY_CODES.ARROW_DOWN: {
+            const direction = CELL_SELECTION_DIRECTION.DOWN
+
+            if (enableStopEditing) {
+              this.selectCellByDirection({
+                direction,
+              })
+
+              this.clearCellSelectionNormalEndCell()
+
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+              event.preventDefault()
+            }
+            break
+          }
+          case KEY_CODES.ENTER: {
+            let direction
+            // add new line
+            if (altKey) {
+              const editInputEditor =
                 this.$refs[this.editInputRef]
 
-            editInputEditor.textareaAddNewLine()
-          } else if (shiftKey) { // direction up
-            direction = CELL_SELECTION_DIRECTION.UP
-            this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-          } else if (ctrlKey) { // stop editing and stay in current cell
-            this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-          } else { // direction down
-            direction = CELL_SELECTION_DIRECTION.DOWN
-            this[INSTANCE_METHODS.STOP_EDITING_CELL]()
-          }
+              editInputEditor.textareaAddNewLine()
+            } else if (shiftKey) { // direction up
+              direction = CELL_SELECTION_DIRECTION.UP
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+            } else if (ctrlKey) { // stop editing and stay in current cell
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+            } else { // direction down
+              direction = CELL_SELECTION_DIRECTION.DOWN
+              this[INSTANCE_METHODS.STOP_EDITING_CELL]()
+            }
 
-          if (direction) {
-            this.clearCellSelectionNormalEndCell()
-            this.selectCellByDirection({
-              direction,
-            })
-          }
-          event.preventDefault()
-          break
-        }
-        case KEY_CODES.SPACE: {
-          if (!isCellEditing) {
-            // start editing and enter a space
-            this[INSTANCE_METHODS.START_EDITING_CELL]({
-              rowKey,
-              colKey,
-              defaultValue: ' ',
-            })
-            event.preventDefault()
-          }
-
-          break
-        }
-        case KEY_CODES.BACK_SPACE: {
-          if (!isCellEditing) {
-            // start editing and clear value
-            this[INSTANCE_METHODS.START_EDITING_CELL]({
-              rowKey,
-              colKey,
-              defaultValue: '',
-            })
-            event.preventDefault()
-          }
-
-          break
-        }
-        case KEY_CODES.DELETE: {
-          if (!isCellEditing) {
-            // delete cell selection range value
-            this.deleteCellSelectionRangeValue()
-            event.preventDefault()
-          }
-
-          break
-        }
-        case KEY_CODES.F2: {
-          if (!isCellEditing) {
-            if (currentColumn.edit) {
-              // start editing cell and don't allow stop eidting by direction key
-              this.enableStopEditing = false
-              this[INSTANCE_METHODS.START_EDITING_CELL]({
-                rowKey,
-                colKey,
+            if (direction) {
+              this.clearCellSelectionNormalEndCell()
+              this.selectCellByDirection({
+                direction,
               })
             }
             event.preventDefault()
+            break
           }
+          case KEY_CODES.SPACE: {
+            if (!isCellEditing) {
+              // start editing and enter a space
+              this[INSTANCE_METHODS.START_EDITING_CELL]({
+                rowKey,
+                colKey,
+                defaultValue: ' ',
+              })
+              event.preventDefault()
+            }
 
-          break
-        }
-        default: {
-          // enter text directly
-          if (isInputKeyCode(event)) {
-            this[INSTANCE_METHODS.START_EDITING_CELL]({
-              rowKey,
-              colKey,
-              defaultValue: '',
-            })
+            break
           }
-          break
-        }
+          case KEY_CODES.BACK_SPACE: {
+            if (!isCellEditing) {
+              // start editing and clear value
+              this[INSTANCE_METHODS.START_EDITING_CELL]({
+                rowKey,
+                colKey,
+                defaultValue: '',
+              })
+              event.preventDefault()
+            }
+
+            break
+          }
+          case KEY_CODES.DELETE: {
+            if (!isCellEditing) {
+              // delete cell selection range value
+              this.deleteCellSelectionRangeValue()
+              event.preventDefault()
+            }
+
+            break
+          }
+          case KEY_CODES.F2: {
+            if (!isCellEditing) {
+              if (currentColumn.edit) {
+                // start editing cell and don't allow stop eidting by direction key
+                this.enableStopEditing = false
+                this[INSTANCE_METHODS.START_EDITING_CELL]({
+                  rowKey,
+                  colKey,
+                })
+              }
+              event.preventDefault()
+            }
+
+            break
+          }
+          default: {
+            // enter text directly
+            if (isInputKeyCode(event)) {
+              this[INSTANCE_METHODS.START_EDITING_CELL]({
+                rowKey,
+                colKey,
+                defaultValue: '',
+              })
+            }
+            break
+          }
         }
       }
     },
@@ -1764,7 +1764,6 @@ export default {
          */
     columnToVisible(nextColumn) {
       const { hasXScrollBar, colgroups } = this
-      if (!nextColumn || nextColumn) return
       if (!hasXScrollBar) {
         return false
       }
@@ -2038,7 +2037,7 @@ export default {
       }
       if (this.$refs[this.virtualPhantomRef]) {
         this.$refs[this.virtualPhantomRef].style.height =
-        totalHeight + 'px'
+          totalHeight + 'px'
       }
     },
     // set virtual scroll start offset
@@ -3100,12 +3099,12 @@ export default {
           editInputEditor.textareaSelect()
           document.execCommand('copy')
         } else if (CONTEXTMENU_NODE_TYPES.REMOVE_ROW === type) {
-        // paste todo
-        // else if (CONTEXTMENU_NODE_TYPES.PASTE === type) {
-        //     editInputEditor.textareaSelect();
-        //     document.execCommand("paste", null, null);
-        // }
-        // remove rows
+          // paste todo
+          // else if (CONTEXTMENU_NODE_TYPES.PASTE === type) {
+          //     editInputEditor.textareaSelect();
+          //     document.execCommand("paste", null, null);
+          // }
+          // remove rows
           tableData.splice(
             startRowIndex,
             endRowIndex - startRowIndex + 1,
@@ -4135,8 +4134,8 @@ export default {
           {/* contextmenu */}
           {(this.enableHeaderContextmenu ||
             this.enableBodyContextmenu) && (
-            <VeContextmenu {...contextmenuProps} />
-          )}
+              <VeContextmenu {...contextmenuProps} />
+            )}
           {/* column resizer */}
           {enableColumnResize && (
             <ColumnResizer {...columnResizerProps} />
